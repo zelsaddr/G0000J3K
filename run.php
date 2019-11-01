@@ -34,7 +34,6 @@ if(isset($register['success'])){
     sleep(15);
     echo $gojek->redeem(0, "44c78b9b-69ec-4fe0-9c63-feb4e6075aed", $send['access_token'])['success'] == true ? "\t\t[$] Success redeem Mc Donald's..".PHP_EOL : "\t\t[!] Failed redeem Mc Donald's..".PHP_EOL;
     echo "\tDone Redeem..".PHP_EOL;
-    echo "\tSending Rp.1 to account : ".$gojek->send_rp1().PHP_EOL;
 }else{
     print("\t".$register['message'].PHP_EOL);
 }
