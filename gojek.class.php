@@ -13,7 +13,7 @@ class Gojek
     private $secret = "83415d06-ec4e-11e6-a41b-6c40088ab51e";
     public function __construct($number)
     {
-		$numbers = $number[0].$number[1];
+	$numbers = $number[0].$number[1];
         $numberx = $number[5];
         strlen($number) < 8 ? die("Nomor harus lebih dari 8 karakter.") : "";
 		if($numbers == "08") { 
@@ -79,15 +79,16 @@ class Gojek
     }
     private function get_random_name(){
         $name = $this->cURL("https://fakenametool.net/generator/random/id_ID/indonesia");
-        preg_match('#<h3><b>(.*?)</b></h3>#si', $name, $curl);
-        while(strlen($curl[1]) < 1){
+        preg_match_all('#<tbody>(.*?)</tbody>#si', $name, $curl);
+        while(strlen($curl[1][0]) < 1){
             $name = $this->cURL("https://fakenametool.net/generator/random/id_ID/indonesia");
-            preg_match('#<h3><b>(.*?)</b></h3>#si', $name, $curl);
+            preg_match_all('#<tbody>(.*?)</tbody>#si', $name, $curl);
         }
+        preg_match_all('#<td>(.*?)</td>#si', $curl[1][0], $names);
         return array(
-            "fullname" => $curl[1],
-            "password" => $curl[1].$this->generateRandomString(3),
-            "mail" => str_replace(" ", ".", strtolower($curl[1])).$this->generateRandomString(3)."@gmail.com"
+            "fullname" => $names[1][0],
+            "password" => str_replace(" ", ".", strtolower($names[1][0])).$this->generateRandomString(3),
+            "mail" => str_replace(" ", ".", strtolower($names[1][0])).$this->generateRandomString(3)."@gmail.com"
             );
     }
     private function gen_uuid() {
